@@ -1,17 +1,40 @@
 import React from 'react'
 import Product from './Product.jsx'
+import $ from 'jquery'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
+    this.handleScroll = this.handleScroll.bind(this)
+  }
+  componentDidMount() {
+    window.addEventListener("scroll", this.handleScroll);
+    this.handleScroll()
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.handleScroll);
+  }
+  componentDidUpdate() {
+    this.handleScroll()
+  }
+  handleScroll(e) {
+    var scrollTop = $(document).scrollTop();
+    var windowHeight = $(window).height();
+    var bodyHeight = $(document).height() - windowHeight;
+    var scrollPercentage = (scrollTop / bodyHeight);
+    if(scrollPercentage > 0.9 || bodyHeight == 0) {
+      this.props.fetchProducts()
+    }
   }
   render() {
-    console.log('App', this.props)
-    let products = (this.props.products || []).map((product) => {
-      return <Product {...product} />
+    let products = (this.props.products).map((product) => {
+      return <Product key={product.id} {...product} />
     })
     return (
-      <ul>{products}</ul>
+      <div>
+        <ul>{products}</ul>
+        <div>{this.props.isFetching ? 'Loading...' : ''}</div>
+      </div>
     )
   }
 }
