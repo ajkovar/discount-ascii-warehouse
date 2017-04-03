@@ -18,11 +18,13 @@ class App extends React.Component {
     this.handleScroll()
   }
   handleScroll(e) {
-    var scrollTop = $(document).scrollTop();
-    var windowHeight = $(window).height();
-    var bodyHeight = $(document).height() - windowHeight;
-    var scrollPercentage = (scrollTop / bodyHeight);
-    if(!this.props.isFetching && (scrollPercentage > 0.9 || bodyHeight == 0)) {
+    var scrollTop = $(document).scrollTop()
+    var windowHeight = $(window).height()
+    var bodyHeight = $(document).height() - windowHeight
+    var scrollPercentage = (scrollTop / bodyHeight)
+    var nearBottom = scrollPercentage > 0.9 || bodyHeight == 0
+    let { isFetching, allLoaded } = this.props
+    if(!isFetching && !allLoaded && nearBottom) {
       this.props.increaseVisibleSize()
     }
   }
