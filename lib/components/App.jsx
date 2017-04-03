@@ -22,12 +22,12 @@ class App extends React.Component {
     var windowHeight = $(window).height();
     var bodyHeight = $(document).height() - windowHeight;
     var scrollPercentage = (scrollTop / bodyHeight);
-    if(scrollPercentage > 0.9 || bodyHeight == 0) {
-      this.props.fetchProducts()
+    if(!this.props.isFetching && (scrollPercentage > 0.9 || bodyHeight == 0)) {
+      this.props.increaseVisibleSize()
     }
   }
   render() {
-    let products = (this.props.products).map((product) => {
+    let products = this.props.products.slice(0, this.props.visibleSize).map((product) => {
       return <Product key={product.id} {...product} />
     })
     return (

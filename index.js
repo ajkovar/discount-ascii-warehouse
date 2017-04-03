@@ -4,7 +4,7 @@ var port = process.env.PORT || 8000;
 
 var webpack = require('webpack');
 var webpackDevMiddleware = require('webpack-dev-middleware');
-var webpackHotMiddleware = require('webpack-hot-middleware');
+// var webpackHotMiddleware = require('webpack-hot-middleware');
 
 let config = require('./webpack.config');
 const compiler = webpack(config);
@@ -14,7 +14,7 @@ let middleware = webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath
 });
 
-let hotMiddleware = webpackHotMiddleware(compiler);
+// let hotMiddleware = webpackHotMiddleware(compiler);
 
 http.createServer(function (req, res) {
     if (req.url.indexOf('/ad') === 0) {
@@ -29,7 +29,7 @@ http.createServer(function (req, res) {
     // serveStaticFiles(req, res);
   middleware(req, res, () => {
   })
-  hotMiddleware(req, res, () => {})
+  // hotMiddleware(req, res, () => {})
 }).listen(port);
 
 console.log('Listening on http://localhost:%d', port);
