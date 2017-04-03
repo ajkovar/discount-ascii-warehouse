@@ -1,5 +1,6 @@
 import React from 'react'
 import Product from './Product.jsx'
+import Ad from './Ad.jsx'
 import $ from 'jquery'
 
 class App extends React.Component {
@@ -18,24 +19,31 @@ class App extends React.Component {
     this.handleScroll()
   }
   handleScroll(e) {
-    var scrollTop = $(document).scrollTop()
-    var windowHeight = $(window).height()
-    var bodyHeight = $(document).height() - windowHeight
-    var scrollPercentage = (scrollTop / bodyHeight)
-    var nearBottom = scrollPercentage > 0.9 || bodyHeight == 0
-    let { isFetching, allLoaded } = this.props
+    const scrollTop = $(document).scrollTop()
+    const windowHeight = $(window).height()
+    const bodyHeight = $(document).height() - windowHeight
+    const scrollPercentage = (scrollTop / bodyHeight)
+    const nearBottom = scrollPercentage > 0.9 || bodyHeight == 0
+    const { isFetching, allLoaded } = this.props
     if(!isFetching && !allLoaded && nearBottom) {
       this.props.increaseVisibleSize()
     }
   }
   render() {
-    let products = this.props.products.slice(0, this.props.visibleSize).map((product) => {
-      return <Product key={product.id} {...product} />
-    })
+    const { products, visibleSize, isFetching } = this.props
+    const length = Math.min(products.length, visibleSize)
+    let productComponents = []
+    for(let i=0; i<length; i++) {
+      const product = products[i]
+      productComponents.push(<Product key={product.id} {...product} />)
+      if(i%20 == 0 ){
+        productComponents.push(<Ad />)
+      }
+    }
     return (
       <div>
-        <ul>{products}</ul>
-        <div>{this.props.isFetching ? 'Loading...' : ''}</div>
+        <ul>{productComponents}</ul>
+        <div>{isFetching ? 'Loading...' : ''}</div>
       </div>
     )
   }
