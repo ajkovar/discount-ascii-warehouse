@@ -1,0 +1,7 @@
+.product {
+  background-color: red;
+  margin: 5px;
+  border: 1px;
+  padding: 5px;
+  display: inline-block;
+}
