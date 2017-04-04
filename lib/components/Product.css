@@ -1,12 +1,10 @@
 .product {
-  background-color: red;
-  margin: 5px;
-  border: 1px;
-  padding: 20px;
-  display: inline-block;
-  white-space: nowrap;
+  composes: item from "./grid.css";
+  background-color: #aaa;
+  padding: 5px;
   text-align: center;
 }
 .preview {
   margin:10px;
+  white-space: nowrap;
 }
