@@ -36,7 +36,7 @@ class App extends React.Component {
     for(let i=0; i<length; i++) {
       const product = products[i]
       productComponents.push(<Product key={product.id} {...product} />)
-      if(i%20 == 0 ){
+      if(i%20 === 0 && i!==0){
         productComponents.push(<Ad />)
       }
     }
