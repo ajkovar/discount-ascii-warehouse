@@ -17,7 +17,7 @@ function Product(props) {
   return (
     <div styleName="product">
       <div>
-        {props.price}
+        ${props.price/100}
       </div>
       <div>
       {dateComponent}

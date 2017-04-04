@@ -3,10 +3,17 @@ import Product from './Product.jsx'
 import Ad from './Ad.jsx'
 import $ from 'jquery'
 
+import { sortTypes } from '../constants'
+
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.handleScroll = this.handleScroll.bind(this)
+    this.changeSortOrder = this.changeSortOrder.bind(this)
+
+    this.sortOptions = sortTypes.map((type) => {
+        return <option value={type}>{type}</option>
+    })
   }
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
@@ -29,20 +36,24 @@ class App extends React.Component {
       this.props.increaseVisibleSize()
     }
   }
+  changeSortOrder(e){
+    this.props.changeSortOrder(e.target.value)
+  }
   render() {
     const { products, visibleSize, isFetching } = this.props
     const length = Math.min(products.length, visibleSize)
-    let productComponents = []
+    let gridItems = []
     for(let i=0; i<length; i++) {
       const product = products[i]
-      productComponents.push(<Product key={product.id} {...product} />)
+      gridItems.push(<Product key={product.id} {...product} />)
       if(i%20 === 0 && i!==0){
-        productComponents.push(<Ad />)
+        gridItems.push(<Ad />)
       }
     }
     return (
       <div>
-        <ul>{productComponents}</ul>
+        <select onChange={this.changeSortOrder}>{this.sortOptions}</select>
+        <div>{gridItems}</div>
         <div>{isFetching ? 'Loading...' : ''}</div>
       </div>
     )
