@@ -10,7 +10,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 })
 
 module.exports = {
-  entry: ['webpack-hot-middleware/client?reload=true', './lib/client.js'],
+  entry: ['./lib/client.js'],
   output: {
     path: path.resolve('static'),
     filename: 'index_bundle.js'
@@ -28,9 +28,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    HtmlWebpackPluginConfig,
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
-  ]
+  plugins: [HtmlWebpackPluginConfig]
 }
