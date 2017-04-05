@@ -2,6 +2,8 @@ import React from 'react'
 import Product from './Product.jsx'
 import Ad from './Ad.jsx'
 import Infinite from './Infinite.jsx'
+import CSSModules from 'react-css-modules';
+import styles from './App.css'
 
 import { sortTypes } from '../constants'
 
@@ -38,7 +40,7 @@ class App extends React.Component {
     return (
       <Infinite handleNearBottom={this.handleNearBottom}>
         <select onChange={this.changeSortOrder}>{this.sortOptions}</select>
-        <div>{gridItems}</div>
+        <div styleName="items-container">{gridItems}</div>
         <div>{isFetching ? 'Loading...' : ''}</div>
         <div>{allLoaded ? '~ end of catalogue ~' : ''}</div>
       </Infinite>
@@ -46,4 +48,4 @@ class App extends React.Component {
   }
 }
 
-export default App
+export default CSSModules(App, styles)

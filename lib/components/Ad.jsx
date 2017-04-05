@@ -20,7 +20,7 @@ function Ad(props) {
   const random = sample(availableNumbers)
   availableNumbers.splice(availableNumbers.indexOf(random), 1)
   const url = `/ad/?r=${random}`
-  return <img styleName="ad" src={url}/>
+  return <div styleName="ad"><img src={url}/></div>
 }
 
-export default CSSModules(Ad, styles, {allowMultiple: true})
+export default CSSModules(Ad, styles)

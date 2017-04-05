@@ -28,4 +28,4 @@ function Product(props) {
     </div>)
 }
 
-export default CSSModules(Product, styles, {allowMultiple: true})
+export default CSSModules(Product, styles)

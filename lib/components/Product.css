@@ -1,7 +1,6 @@
 .product {
   composes: item from "./grid.css";
   background-color: #aaa;
-  padding: 5px;
   text-align: center;
 }
 .preview {
