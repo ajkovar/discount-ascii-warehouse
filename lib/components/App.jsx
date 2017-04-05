@@ -12,7 +12,7 @@ class App extends React.Component {
     this.changeSortOrder = this.changeSortOrder.bind(this)
 
     this.sortOptions = sortTypes.map((type) => {
-        return <option value={type}>{type}</option>
+      return <option value={type} key={type}>{type}</option>
     })
   }
   componentDidMount() {
@@ -40,14 +40,14 @@ class App extends React.Component {
     this.props.changeSortOrder(e.target.value)
   }
   render() {
-    const { products, visibleSize, isFetching } = this.props
+    const { products, visibleSize, isFetching, allLoaded } = this.props
     const length = Math.min(products.length, visibleSize)
-    let gridItems = []
+    const gridItems = []
     for(let i=0; i<length; i++) {
       const product = products[i]
       gridItems.push(<Product key={product.id} {...product} />)
       if(i%20 === 0 && i!==0){
-        gridItems.push(<Ad />)
+        gridItems.push(<Ad key={i}/>)
       }
     }
     return (
@@ -55,6 +55,7 @@ class App extends React.Component {
         <select onChange={this.changeSortOrder}>{this.sortOptions}</select>
         <div>{gridItems}</div>
         <div>{isFetching ? 'Loading...' : ''}</div>
+        <div>{allLoaded ? '~ end of catalogue ~' : ''}</div>
       </div>
     )
   }
