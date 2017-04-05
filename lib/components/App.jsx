@@ -1,38 +1,23 @@
 import React from 'react'
 import Product from './Product.jsx'
 import Ad from './Ad.jsx'
+import Infinite from './Infinite.jsx'
 
 import { sortTypes } from '../constants'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
-    this.handleScroll = this.handleScroll.bind(this)
+    this.handleNearBottom = this.handleNearBottom.bind(this)
     this.changeSortOrder = this.changeSortOrder.bind(this)
 
     this.sortOptions = sortTypes.map((type) => {
       return <option value={type} key={type}>{type}</option>
     })
   }
-  componentDidMount() {
-    window.addEventListener("scroll", this.handleScroll);
-    this.handleScroll()
-  }
-  componentWillUnmount() {
-    window.removeEventListener("scroll", this.handleScroll);
-  }
-  componentDidUpdate() {
-    this.handleScroll()
-  }
-  handleScroll(e) {
-    const containerHeight = window.innerHeight
-    const scrollableHeight = document.body.clientHeight
-    const difference = scrollableHeight - containerHeight
-    const scrollTop = window.pageYOffset
-    const scrollPercentage = (scrollTop / difference)
-    const nearBottom = scrollPercentage > 0.9 || difference <= 0
+  handleNearBottom() {
     const { isFetching, allLoaded } = this.props
-    if(!isFetching && !allLoaded && nearBottom) {
+    if(!isFetching && !allLoaded) {
       this.props.increaseVisibleSize()
     }
   }
@@ -51,12 +36,12 @@ class App extends React.Component {
       }
     }
     return (
-      <div>
+      <Infinite handleNearBottom={this.handleNearBottom}>
         <select onChange={this.changeSortOrder}>{this.sortOptions}</select>
         <div>{gridItems}</div>
         <div>{isFetching ? 'Loading...' : ''}</div>
         <div>{allLoaded ? '~ end of catalogue ~' : ''}</div>
-      </div>
+      </Infinite>
     )
   }
 }
