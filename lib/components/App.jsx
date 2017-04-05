@@ -1,7 +1,6 @@
 import React from 'react'
 import Product from './Product.jsx'
 import Ad from './Ad.jsx'
-import $ from 'jquery'
 
 import { sortTypes } from '../constants'
 
@@ -26,11 +25,12 @@ class App extends React.Component {
     this.handleScroll()
   }
   handleScroll(e) {
-    const scrollTop = $(document).scrollTop()
-    const windowHeight = $(window).height()
-    const bodyHeight = $(document).height() - windowHeight
-    const scrollPercentage = (scrollTop / bodyHeight)
-    const nearBottom = scrollPercentage > 0.9 || bodyHeight == 0
+    const containerHeight = window.innerHeight
+    const scrollableHeight = document.body.clientHeight
+    const difference = scrollableHeight - containerHeight
+    const scrollTop = window.pageYOffset
+    const scrollPercentage = (scrollTop / difference)
+    const nearBottom = scrollPercentage > 0.9 || difference <= 0
     const { isFetching, allLoaded } = this.props
     if(!isFetching && !allLoaded && nearBottom) {
       this.props.increaseVisibleSize()
