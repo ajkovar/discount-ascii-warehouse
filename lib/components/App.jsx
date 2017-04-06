@@ -1,17 +1,13 @@
 import React from 'react'
-import Product from './Product.jsx'
-import Ad from './Ad.jsx'
+import ProductList from './ProductList.jsx'
 import Infinite from './Infinite.jsx'
-import CSSModules from 'react-css-modules';
-import styles from './App.css'
-
 import { sortTypes } from '../constants'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
-    this.handleNearBottom = this.handleNearBottom.bind(this)
     this.changeSortOrder = this.changeSortOrder.bind(this)
+    this.handleNearBottom = this.handleNearBottom.bind(this)
 
     this.sortOptions = sortTypes.map((type) => {
       return <option value={type} key={type}>{type}</option>
@@ -28,19 +24,10 @@ class App extends React.Component {
   }
   render() {
     const { products, visibleSize, isFetching, allLoaded } = this.props
-    const length = Math.min(products.length, visibleSize)
-    const gridItems = []
-    for(let i=0; i<length; i++) {
-      const product = products[i]
-      gridItems.push(<Product key={product.id} {...product} />)
-      if(i%20 === 0 && i!==0){
-        gridItems.push(<Ad key={i}/>)
-      }
-    }
     return (
       <Infinite handleNearBottom={this.handleNearBottom}>
         <select onChange={this.changeSortOrder}>{this.sortOptions}</select>
-        <div styleName="items-container">{gridItems}</div>
+        <ProductList products={products} visibleSize={visibleSize} />
         <div>{isFetching ? 'Loading...' : ''}</div>
         <div>{allLoaded ? '~ end of catalogue ~' : ''}</div>
       </Infinite>
@@ -48,4 +35,4 @@ class App extends React.Component {
   }
 }
 
-export default CSSModules(App, styles)
+export default App

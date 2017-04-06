@@ -4,16 +4,16 @@ import styles from './Product.css'
 import TimeAgo from 'react-timeago'
 
 function Product(props) {
-  let pxSize = `${props.size}px`
+  const pxSize = `${props.size}px`
   const style = {
     height: props.size,
     fontSize: pxSize,
     lineHeight: pxSize
   }
   const date = new Date(props.date)
-  let sevenDaysAgo = new Date()
+  const sevenDaysAgo = new Date()
   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-  let dateComponent = date < sevenDaysAgo ? <div>{props.date}</div> : <TimeAgo date={date} />
+  const dateComponent = date < sevenDaysAgo ? <div>{props.date}</div> : <TimeAgo date={date} />
   return (
     <div styleName="product">
       <div>
