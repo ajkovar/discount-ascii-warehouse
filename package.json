@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node .",
-    "test": "mocha --compilers js:babel-core/register --recursive --require ignore-styles",
+    "test": "mocha --compilers js:babel-core/register --recursive --require ./test/test-helper.js",
     "autotest": "mocha --compilers js:babel-core/register --recursive --watch --growl --require ./test/test-helper.js"
   },
   "author": "Alex Kovar <ajkovar@gmail.com>",
